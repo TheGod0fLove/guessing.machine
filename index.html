@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bói Tình Yêu & Ghi Nhớ</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        h2 {
+            color: #ff4b2b;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 600;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ffb6c1;
+            border-radius: 10px;
+            outline: none;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+        input:focus {
+            border-color: #ff4b2b;
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(to right, #ff416c, #ff4b2b);
+            border: none;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 65, 108, 0.4);
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #d63384;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>❤️ Bói Tình Yêu ❤️</h2>
+    
+    <div class="input-group">
+        <label for="yourName">Tên của bạn:</label>
+        <input type="text" id="yourName" placeholder="Nhập tên bạn..." required>
+    </div>
+
+    <div class="input-group">
+        <label for="crushName">Tên Crush của bạn:</label>
+        <input type="text" id="crushName" placeholder="Nhập tên crush..." required>
+    </div>
+
+    <button onclick="processLove()">Xem Tỉ Lệ Hợp Nhau & Lưu Note</button>
+
+    <div id="result"></div>
+</div>
+
+<script>
+function processLove() {
+    const yourName = document.getElementById('yourName').value.trim();
+    const crushName = document.getElementById('crushName').value.trim();
+
+    if (!yourName || !crushName) {
+        alert("Vui lòng nhập đầy đủ tên của bạn và crush!");
+        return;
+    }
+
+    // Tạo thông điệp yêu cầu
+    const loveText = `"${yourName}" yêu "${crushName}"`;
+
+    // 1. Hiển thị thông báo vui trên màn hình
+    const randomPercent = Math.floor(Math.random() * 21) + 80; // Tỉ lệ từ 80% - 100%
+    document.getElementById('result').innerText = `Tỉ lệ hợp nhau: ${randomPercent}%!\nĐang tạo note ghi nhớ...`;
+
+    // 2. Tạo và tải file Note (.txt) tự động về máy
+    downloadNoteFile(yourName, crushName, loveText);
+}
+
+function downloadNoteFile(yourName, crushName, textContent) {
+    // Tạo nội dung file
+    const blob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
+    const link = document.createElement('a');
+    
+    // Đặt tên file dạng: Note_TenBan_TenCrush.txt
+    link.download = `Note_${yourName}_${crushName}.txt`;
+    link.href = window.URL.createObjectURL(blob);
+    
+    // Tự động bấm để tải file note về máy người dùng
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+</script>
+
+</body>
+</html>
