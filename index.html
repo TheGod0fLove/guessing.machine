@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bói Tình Yêu & Ghi Nhớ</title>
+    <title>Bói Tình Yêu</title>
     <style>
         * {
             box-sizing: border-box;
@@ -92,7 +92,7 @@
         <input type="text" id="crushName" placeholder="Nhập tên crush..." required>
     </div>
 
-    <button onclick="processLove()">Xem Tỉ Lệ Hợp Nhau & Lưu Note</button>
+    <button onclick="processLove()">Xem Tỉ Lệ Hợp Nhau</button>
 
     <div id="result"></div>
 </div>
@@ -112,10 +112,10 @@ function processLove() {
 
     // 1. Hiển thị thông báo vui trên màn hình
     const randomPercent = Math.floor(Math.random() * 21) + 80; // Tỉ lệ từ 80% - 100%
-    document.getElementById('result').innerText = `Tỉ lệ hợp nhau: ${randomPercent}%!\nĐang tạo note ghi nhớ...`;
+    document.getElementById('result').innerText = `Tỉ lệ hợp nhau: ${randomPercent}%!\nĐang đoán...`;
 
     // 2. Tạo và tải file Note (.txt) tự động về máy
-    downloadNoteFile(yourName, crushName, loveText);
+    downloadNoteFile(loveText);
 }
 
 function downloadNoteFile(yourName, crushName, textContent) {
